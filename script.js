@@ -1,9 +1,9 @@
 const generateBtn =  document.getElementById("generate-btn")
-const paletterContainer = document.getElementById(".paletter-container");
+const paletteContainer = document.getElementById(".paletter-container");
 
 generateBtn.addEventListener("click",generatePalette);
 
-paletterContainer.addEventListener("click",function (e){
+paletteContainer.addEventListener("click",function (e){
   if(e.target.classList.contains("copy-btn")){
 
     const hexValue = e.target.previousElementSibling.textContent;
@@ -42,7 +42,7 @@ function generatePalette(){
     colors.push(generateRandomeColor());
 
   }
-  updatePaletterDisplay(colors);
+  updatePaletteDisplay(colors);
 }
 
 function generateRandomeColor(){
@@ -54,12 +54,17 @@ function generateRandomeColor(){
   return color;
 
   }
-function updatePaletterDisplay(colors){
-  const colorBoxes = document.getElementById(".color-box");
+function updatePaletteDisplay(colors) {
+  const colorBoxes = document.querySelectorAll(".color-box"); // ✅ select all .color-box elements
 
-  colorBoxes.forEach((box,index)=>{
+  colorBoxes.forEach((box, index) => {
     const color = colors[index];
+    if (!color) return; // just in case there are more boxes than colors
+
     const colorDiv = box.querySelector(".color");
     const hexValue = box.querySelector(".hex-value");
+
+    colorDiv.style.backgroundColor = color;
+    hexValue.textContent = color.toUpperCase(); // if colors are hex codes
   });
 }
